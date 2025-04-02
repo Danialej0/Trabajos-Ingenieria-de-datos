@@ -162,7 +162,7 @@ insert into Cargo values(1,'Personero', 1, true), (2,'Contralor',1, true), (3,'C
 
 insert into Eleccion values(1, '2020-04-20', '2020',true), (2, '2019-04-15', '2019',true), (3, '2019-04-12', '2019',false), (4, '2018-04-14', '2018',true), (5, '2017-04-12', '2017',true);
 
-DELETE FROM Eleccion WHERE idEleccion IN (1, 2, 3, 4, 5);
+-- DELETE FROM Eleccion WHERE idEleccion IN (1, 2, 3, 4, 5);
 select * from eleccion;
 
 insert into TipoMiembro values(1,'Estudiante',true), (2,'Profesor', true), (3,'Acudiente', true);
@@ -202,11 +202,11 @@ left join cargo ca on co.idConcejo = ca.idConsejoFK;
 
 -- Realice una consulta que muestre cada usuario con su jornada, tipo de miembro y curso
 
-SELECT Usuario.nombreUsuario, Usuario.apellidoUsuario, Jornada.nomJornada, TipoMiembro.nomTipoMiembro, Curso.nomCurso
-FROM Usuario
-JOIN Jornada ON Usuario.idJornadaFK = Jornada.idJornada
-JOIN TipoMiembro ON Usuario.idTipoMiembroFK = TipoMiembro.idTipoMiembro
-JOIN Curso ON Usuario.idCursoFK = Curso.idCurso;
+select Usuario.nombreUsuario, Usuario.apellidoUsuario, Jornada.nomJornada, TipoMiembro.nomTipoMiembro, Curso.nomCurso
+from Usuario
+join Jornada on Usuario.idJornadaFK = Jornada.idJornada
+join TipoMiembro on Usuario.idTipoMiembroFK = TipoMiembro.idTipoMiembro
+join Curso on Usuario.idCursoFK = Curso.idCurso;
 
 -- Agregue el campo a la tabla estudiante llamada profesión.
 
@@ -214,9 +214,48 @@ alter table usuario add profesion varchar(20);
 
 -- Realice una consulta que muestre la cantidad de votos obtenidos por cada candidato en las votaciones registradas. 
 
-SELECT Usuario.nombreUsuario, Usuario.apellidoUsuario, Postulacion_Candidato.totalVotos
-FROM Postulacion_Candidato
-JOIN Usuario ON Postulacion_Candidato.idUsuarioFK = Usuario.idUsuario
-ORDER BY Postulacion_Candidato.totalVotos DESC;
+select Usuario.nombreUsuario, Usuario.apellidoUsuario, Postulacion_Candidato.totalVotos
+from Postulacion_Candidato
+join Usuario on Postulacion_Candidato.idUsuarioFK = Usuario.idUsuario
+order by Postulacion_Candidato.totalVotos desc;
 
+
+-- 3 procesimientos almacenados
+
+-- Insertar cargo
+
+describe cargo;
+
+DELIMITER  // 
+CREATE PROCEDURE InsertarCargo(in idCargo int, nomCargo varchar(20), estadoC bool,  idConsejoFK int)
+BEGIN
+
+insert into Cargo values (idCargo, nomCargo, estadoC, idConsejoFK);
+
+END //
+DELIMITER ;
+
+call InsertarCargo('4', 'tesorero', true, 1);
+
+select * from cargo;
+
+-- actualizar clave usuario
+describe usuario;
+
+DELIMITER //
+CREATE PROCEDURE ActualizarClave(in id int, in nuevaPassWordUsuario VARCHAR(30))
+BEGIN 
+
+update Usuario 
+set passWordUsuario = nuevaPassWordUsuario
+where id = idUsuario;
+
+END //
+DELIMITER ;
+
+drop procedure ActualizarClave;
+
+select * from usuario where idUsuario = 1;
+
+call ActualizarClave (1, 'Hola123');
 
