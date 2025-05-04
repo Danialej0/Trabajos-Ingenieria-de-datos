@@ -1,0 +1,17 @@
+use colegio
+db.createCollection("alumnos")
+db.createCollection("materia")
+db.createCollection("grados")
+db.createCollection("calificaciones")
+db.grados.insertMany([{'_id': 1, grado: 'primero'}, {'_id': 2, grado: 'segundo'}, {'_id': 3, grado: 'tercero'}])
+db.grados.find()
+db.materia.insertMany([{'_id': 1, nombre: 'matematicas'}, {'_id': 2, grado: 'ingles'}, {'_id': 3, grado: 'Historia'}])
+db.alumnos.insertMany([{'_id': 1, nombre: 'Daniel'}, {'_id': 2, nombre: 'Tatiana'}, {'_id': 3, nombre: 'Mariana'}])
+db.calificaciones.insertMany([{alumnoId: 1, materiaId: 1, gradoId: 1, nota: 'excelente'},
+                              {alumnoId: 2, materiaId: 2, gradoId: 2, nota: 'regular'},
+                              {alumnoId: 3, materiaId: 3, gradoId: 3, nota: 'Buena'}])
+
+db.calificaciones.aggregate([{
+$lookup:{from:'alumnos', localField: 'alumnoId', foreignField: '_id', as: 'alumno'}},
+                             {$lookup:{from:'materia', localField: 'materiaId' , foreignField: '_id', as: 'materia'}},
+                             {$lookup:{from:'grados', localField: 'gradoId', foreignField: '_id', as: 'grado'}}])

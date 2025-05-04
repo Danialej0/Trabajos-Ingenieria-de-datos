@@ -1,0 +1,70 @@
+how dbs
+admin    8.00 KiB
+config  12.00 KiB
+local    8.00 KiB
+use tienda
+switched to db tienda
+db.createCollection('Productos')
+{ ok: 1 }
+db.createCollection('Clientes')
+{ ok: 1 }
+db.createCollection('Ventas')
+{ ok: 1 }
+
+db.Productos.insertMany([{nombre: 'Laptop', precio: 1200000, cantidad:10},
+                         {nombre: 'Mouse', precio: 60000, cantidad: 15},
+                         {nombre: 'Teclado', precio: 80000, cantidad: 20},
+                         {nombre: 'USB', precio: 10000, cantidad: 100}])
+
+db.Clientes.insertMany([{nombre: 'Daniel', correo: 'danialejo@gmail.com', numero: 320405, direccion: 'avenida 68'},])
+
+db.Clientes.insertMany([{nombre: 'Porras', correo: 'CrisPorro@gmail.com', numero: 3231865, direccion: 'avenida boyaca'},
+                        {nombre: 'Jeronimo', correo: 'papupro@gmail.com', numero: 31335730, dirreccion: 'Carrera 38'}])
+
+db.Clientes.find()
+
+db.Clientes.insertMany([{nombre: 'Juan', correo: 'juanPerez@gmail.com', numero: 3227777, direccion: 'Avenida carrera 70'},
+                        {nombre: 'Mariana', correo: 'marianaDebate@gmail.com', numero: 3138978, direccion: 'Carrera 1'}])
+
+db.Ventas.insertMany([{nombre: 'Daniel', Producto: 'Laptop', cantidad: 1},
+                      {nombre: 'Porras', producto: 'Mouse', cantidad: 2}])
+
+db.Ventas.aggregate([{$lookup:{from: 'Productos', localField: 'Producto', foreignField: 'nombre', as: 'Ventas'}}])
+{
+  _id: ObjectId('6816e34fb4c89b39c055aa06'),
+  nombre: 'Daniel',
+  Producto: 'Laptop',
+  cantidad: 1,
+  Ventas: [
+    {
+      _id: ObjectId('6816dacab4c89b39c055a9fc'),
+      nombre: 'Laptop',
+      precio: 1200000,
+      cantidad: 10
+    }
+  ]
+}
+
+db.Ventas.aggregate([{$lookup:{from: 'Productos', localField: 'producto', foreignField: 'nombre', as: 'Ventas'}}])
+{
+  _id: ObjectId('6816e34fb4c89b39c055aa06'),
+  nombre: 'Daniel',
+  Producto: 'Laptop',
+  cantidad: 1,
+  Ventas: []
+}
+
+{
+  _id: ObjectId('6816e34fb4c89b39c055aa07'),
+  nombre: 'Porras',
+  producto: 'Mouse',
+  cantidad: 2,
+  Ventas: [
+    {
+      _id: ObjectId('6816dacab4c89b39c055a9fd'),
+      nombre: 'Mouse',
+      precio: 60000,
+      cantidad: 15
+    }
+  ]
+}
