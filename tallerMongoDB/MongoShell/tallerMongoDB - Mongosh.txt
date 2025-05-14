@@ -1,0 +1,313 @@
+db.usuarios.insertMany([
+  { nombre: "Juan Pérez", edad: 30, correo: "juan.perez@urosario.com" },
+  { nombre: "Ana López", edad: 25, correo: "ana.lopez@urosario.com" },
+  { nombre: "Luis Torres", edad: 35, correo: "luis.torres@urosario.com" }
+])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6823cad6679a7645ccdaa578'),
+    '1': ObjectId('6823cad6679a7645ccdaa579'),
+    '2': ObjectId('6823cad6679a7645ccdaa57a')
+  }
+}
+db.usuarios.find()
+{
+  _id: ObjectId('6823cad6679a7645ccdaa578'),
+  nombre: 'Juan Pérez',
+  edad: 30,
+  correo: 'juan.perez@urosario.com'
+}
+{
+  _id: ObjectId('6823cad6679a7645ccdaa579'),
+  nombre: 'Ana López',
+  edad: 25,
+  correo: 'ana.lopez@urosario.com'
+}
+{
+  _id: ObjectId('6823cad6679a7645ccdaa57a'),
+  nombre: 'Luis Torres',
+  edad: 35,
+  correo: 'luis.torres@urosario.com'
+}
+db.usuarios.find({nombre: "Ana lópez"})
+db.usuarios.find({nombre: "Ana López"})
+{
+  _id: ObjectId('6823cad6679a7645ccdaa579'),
+  nombre: 'Ana López',
+  edad: 25,
+  correo: 'ana.lopez@urosario.com'
+}
+db.usuarios.find({ edad: { $gte: 30 } })
+{
+  _id: ObjectId('6823cad6679a7645ccdaa578'),
+  nombre: 'Juan Pérez',
+  edad: 30,
+  correo: 'juan.perez@urosario.com'
+}
+{
+  _id: ObjectId('6823cad6679a7645ccdaa57a'),
+  nombre: 'Luis Torres',
+  edad: 35,
+  correo: 'luis.torres@urosario.com'
+}
+db.usuarios.updateOne({ nombre: "Juan Pérez" },{ $set: { edad: 31 }})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db.usuarios.find()
+{
+  _id: ObjectId('6823cad6679a7645ccdaa578'),
+  nombre: 'Juan Pérez',
+  edad: 31,
+  correo: 'juan.perez@urosario.com'
+}
+{
+  _id: ObjectId('6823cad6679a7645ccdaa579'),
+  nombre: 'Ana López',
+  edad: 25,
+  correo: 'ana.lopez@urosario.com'
+}
+{
+  _id: ObjectId('6823cad6679a7645ccdaa57a'),
+  nombre: 'Luis Torres',
+  edad: 35,
+  correo: 'luis.torres@urosario.com'
+}
+db.usuarios.updateMany({ edad: { $gte: 30 } },{ $set: { activo: true }})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+db.usuarios.find()
+{
+  _id: ObjectId('6823cad6679a7645ccdaa578'),
+  nombre: 'Juan Pérez',
+  edad: 31,
+  correo: 'juan.perez@urosario.com',
+  activo: true
+}
+{
+  _id: ObjectId('6823cad6679a7645ccdaa579'),
+  nombre: 'Ana López',
+  edad: 25,
+  correo: 'ana.lopez@urosario.com'
+}
+{
+  _id: ObjectId('6823cad6679a7645ccdaa57a'),
+  nombre: 'Luis Torres',
+  edad: 35,
+  correo: 'luis.torres@urosario.com',
+  activo: true
+}
+db.usuarios.deleteOne({nombre: "Luis Torres"})
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+db.usuarios.deleteMany({ edad: {$lt: 30 }})
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+db.usuarios.find()
+{
+  _id: ObjectId('6823cad6679a7645ccdaa578'),
+  nombre: 'Juan Pérez',
+  edad: 31,
+  correo: 'juan.perez@urosario.com',
+  activo: true
+}
+db.createCollection("productos")
+{ ok: 1 }
+db.productos.insertMany([
+  { nombre: "Laptop", precio: 700, categoria: "Electrónica" },
+  { nombre: "Licuadora", precio: 120, categoria: "Hogar" },
+  { nombre: "Botas", precio: 45, categoria: "Ropa" },
+  { nombre: "Celular", precio: 850, categoria: "Electrónica" },
+  { nombre: "Silla", precio: 90, categoria: "Hogar" }
+])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6823cd57679a7645ccdaa57b'),
+    '1': ObjectId('6823cd57679a7645ccdaa57c'),
+    '2': ObjectId('6823cd57679a7645ccdaa57d'),
+    '3': ObjectId('6823cd57679a7645ccdaa57e'),
+    '4': ObjectId('6823cd57679a7645ccdaa57f')
+  }
+}
+db.productos.find({ precio: { $gt: 100 } })
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57b'),
+  nombre: 'Laptop',
+  precio: 700,
+  categoria: 'Electrónica'
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57c'),
+  nombre: 'Licuadora',
+  precio: 120,
+  categoria: 'Hogar'
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57e'),
+  nombre: 'Celular',
+  precio: 850,
+  categoria: 'Electrónica'
+}
+db.productos.find().sort({ precio: -1 })
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57e'),
+  nombre: 'Celular',
+  precio: 850,
+  categoria: 'Electrónica'
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57b'),
+  nombre: 'Laptop',
+  precio: 700,
+  categoria: 'Electrónica'
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57c'),
+  nombre: 'Licuadora',
+  precio: 120,
+  categoria: 'Hogar'
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57f'),
+  nombre: 'Silla',
+  precio: 90,
+  categoria: 'Hogar'
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57d'),
+  nombre: 'Botas',
+  precio: 45,
+  categoria: 'Ropa'
+}
+db.productos.updateMany({ $set: { en_stock: true } })
+MongoInvalidArgumentError: Update document requires atomic operators
+db.productos.updateMany({}, { $set: { en_stock: true } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 5,
+  modifiedCount: 5,
+  upsertedCount: 0
+}
+db.productos.find()
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57b'),
+  nombre: 'Laptop',
+  precio: 700,
+  categoria: 'Electrónica',
+  en_stock: true
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57c'),
+  nombre: 'Licuadora',
+  precio: 120,
+  categoria: 'Hogar',
+  en_stock: true
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57d'),
+  nombre: 'Botas',
+  precio: 45,
+  categoria: 'Ropa',
+  en_stock: true
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57e'),
+  nombre: 'Celular',
+  precio: 850,
+  categoria: 'Electrónica',
+  en_stock: true
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57f'),
+  nombre: 'Silla',
+  precio: 90,
+  categoria: 'Hogar',
+  en_stock: true
+}
+db.productos.updateMany({ precio: { $gt: 500 } },{ $set: { en_stock: false } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+db.productos.find()
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57b'),
+  nombre: 'Laptop',
+  precio: 700,
+  categoria: 'Electrónica',
+  en_stock: false
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57c'),
+  nombre: 'Licuadora',
+  precio: 120,
+  categoria: 'Hogar',
+  en_stock: true
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57d'),
+  nombre: 'Botas',
+  precio: 45,
+  categoria: 'Ropa',
+  en_stock: true
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57e'),
+  nombre: 'Celular',
+  precio: 850,
+  categoria: 'Electrónica',
+  en_stock: false
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57f'),
+  nombre: 'Silla',
+  precio: 90,
+  categoria: 'Hogar',
+  en_stock: true
+}
+db.productos.deleteMany({ precio: { $lt: 50 } })
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+db.productos.find()
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57b'),
+  nombre: 'Laptop',
+  precio: 700,
+  categoria: 'Electrónica',
+  en_stock: false
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57c'),
+  nombre: 'Licuadora',
+  precio: 120,
+  categoria: 'Hogar',
+  en_stock: true
+}
+{
+  _id: ObjectId('6823cd57679a7645ccdaa57e'),
+  nombre: 'Celular',
+  precio: 850,
+  categoria: 'Electrónica',
+  en_stock: false
+}

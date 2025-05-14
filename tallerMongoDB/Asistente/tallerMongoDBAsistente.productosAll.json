@@ -1,0 +1,36 @@
+[{
+  "_id": {
+    "$oid": "6823d78a3676bdb97f75772d"
+  },
+  "nombre": "Televisor",
+  "precio": 700,
+  "categoria": "Electrónica",
+  "en_stock": false
+},
+{
+  "_id": {
+    "$oid": "6823d7ba3676bdb97f75772e"
+  },
+  "nombre": "Licuadora",
+  "precio": 120,
+  "categoria": "Hogar",
+  "en_stock": true
+},
+{
+  "_id": {
+    "$oid": "6823d81b3676bdb97f757732"
+  },
+  "nombre": "Celular",
+  "precio": 850,
+  "categoria": "Electrónica",
+  "en_stock": false
+},
+{
+  "_id": {
+    "$oid": "6823d8273676bdb97f757733"
+  },
+  "nombre": "Silla",
+  "precio": 90,
+  "categoria": "Hogar",
+  "en_stock": true
+}]
